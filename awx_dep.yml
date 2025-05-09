@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: awx-operator
+  labels:
+    app: awx-operator
+spec:
+  selector:
+    matchLabels:
+      app: awx-operator
+      tier: frontend
+    strategy: Recreate
+  template:
+    metadata:
+      labels:
+        app: awx-operator
+        tier: frontend
+    spec:
+      containers:
+      - name: awx-operator
+        image: ansible/awx-operator:2.19.0
+        env:
+        - name: awx-operator_DB_HOST
+          value: awx-operator-postgres
+        - name: awx-operator_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: awx-operator-pass
+              key: password
+        - name: awx-operator_DB_USER
+          value: awx-operator
+        - name: awx-operator_DB_NAME
+          value: awxdb
+
+        
+        ports:
+        - containerPort: 8052
+          name: awx-operator
+      
+        volumeMounts:
+        - name: awx-operator-persistent-storage
+          mountPath: /var/lib/awx-operator
+      volumes:
+        - name: awx-operator-persistent-storage
+          persistentVolumeClaim: 
+          claimName: patch-pvc-awx
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: awx-operator
+spec:
+  type: NodePort
+  selector:
+    app: awx-operator
+    tier: frontend
+  ports:
+  - port: 80
+    targetPort: 8052
+    nodePort: 30500
+
+## awx-operator-postgres
+

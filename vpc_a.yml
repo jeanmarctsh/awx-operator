@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: patch-pvc-awx
+  labels:
+    app: awx-operator
+spec:
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: lab-patch-local
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce

@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: patch-pv
+  labels:
+    type: local
+    app: awx-operator
+
+spec:
+  capacity:
+    storage: 10Gi
+  volumeMode: Filesystem #defautlvolume mode
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: lab-patch-local
+  
+#### rajout de la conf liée au NFS ou local? c'est en fonction de mon projet. aucun des deux
+#### J'ai un noeud et masternode et ce, en mode kubernetes single node

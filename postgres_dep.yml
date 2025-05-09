@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: awx-operator-postgres
+  labels:
+    app: awx-operator
+spec:
+  selector:
+    matchLabels:
+      app: awx-operator
+      tier: postgres
+  strategy: Recreate
+  template:
+    metadata:
+      labels:
+        app: awx-operator
+        tier: postgres
+    spec:
+      containers:
+      - name: postgres:14
+        image: postgres
+        env: 
+        ### information à la longue à crypter avec secretfile 
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: post-pass
+              key: password-user
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: post-pass
+              key: password-post
+        - name: POSTGRES_DB
+          value: mydb
+
+        ports:
+        - containerPort: 5432
+          name: postgres
+        volumeMounts: 
+        - name: postgres-persistent-storage
+          mountPath: /var/lib/postgresql/data
+      
+      volumes:
+      - name: postgres-persistent-storage
+        persistentVolumeClaim:
+        claimName: patch-pvc-postgres
+
+---
+##### postgres
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: awx-operator-postgres
+  namespace: awx-operator
+  labels:
+    app: awx-operator
+spec:
+  selector:
+    app: awx-operator
+    tier: postgres
+  ports:
+  - port: 5432
+    targetPort: 5432
+  clusterIP: None
