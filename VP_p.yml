@@ -14,6 +14,11 @@ spec:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   storageClassName: lab-patch-local
+
+  nfs:
+    path: /srv/nfs/k_test
+    server: 127.0.0.1
+
   
-#### rajout de la conf liée au NFS ou local? c'est en fonction de mon projet. aucun des deux
-#### J'ai un noeud et masternode et ce, en mode kubernetes single node
+#### rajout de la conf liée au NFS ou local? c'est en fonction de mon projet.
+#### Mode kubernetes single node (cluster and worker-node at the same place (inside of my host))

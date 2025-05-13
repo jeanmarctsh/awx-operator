@@ -9,7 +9,8 @@ spec:
     matchLabels:
       app: awx-operator
       tier: frontend
-    strategy: Recreate
+  strategy: 
+    type: Recreate
   template:
     metadata:
       labels:
@@ -31,8 +32,6 @@ spec:
           value: awx-operator
         - name: awx-operator_DB_NAME
           value: awxdb
-
-        
         ports:
         - containerPort: 8052
           name: awx-operator
@@ -43,7 +42,7 @@ spec:
       volumes:
         - name: awx-operator-persistent-storage
           persistentVolumeClaim: 
-          claimName: patch-pvc-awx
+            claimName: patch-pvc-awx
 
 ---
 apiVersion: v1

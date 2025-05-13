@@ -14,6 +14,9 @@ spec:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   storageClassName: lab-patch-local
+  nfs:
+    path: /srv/nfs/k_test
+    server: 127.0.0.1
   
 
   

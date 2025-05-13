@@ -4,3 +4,6 @@ metadata:
   name: lab-patch-local
 provisioner: kubernetes.io/no-provisioner 
 volumeBindingMode: WaitForFirstConsumer
+reclaimPolicy: Retain
+
+  

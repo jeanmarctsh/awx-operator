@@ -2,23 +2,27 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: awx-operator-postgres
+  namespace: awx-operator
   labels:
     app: awx-operator
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: awx-operator
       tier: postgres
-  strategy: Recreate
+  strategy: 
+    type: Recreate
   template:
     metadata:
       labels:
         app: awx-operator
         tier: postgres
     spec:
+      
       containers:
-      - name: postgres:14
-        image: postgres
+      - name: postgres
+        image: postgres:14
         env: 
         ### information à la longue à crypter avec secretfile 
         - name: POSTGRES_USER
@@ -44,7 +48,7 @@ spec:
       volumes:
       - name: postgres-persistent-storage
         persistentVolumeClaim:
-        claimName: patch-pvc-postgres
+          claimName: patch-pvc-postgres
 
 ---
 ##### postgres

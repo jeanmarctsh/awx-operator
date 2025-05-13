@@ -8,7 +8,7 @@ spec:
   resources:
     requests:
       storage: 5Gi
-  storageClassName: lab-patch-local
+  storageClassName: lab-patch-local 
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
