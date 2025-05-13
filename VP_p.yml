@@ -22,3 +22,6 @@ spec:
   
 #### rajout de la conf liée au NFS ou local? c'est en fonction de mon projet.
 #### Mode kubernetes single node (cluster and worker-node at the same place (inside of my host))
+
+### ip du serveur nfs à renseigner
+### revoir la partie ressource pour résoudre le pb
