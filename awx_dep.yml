@@ -33,7 +33,7 @@ spec:
         - name: awx-operator_DB_NAME
           value: awxdb
         ports:
-        - containerPort: 8052
+        - containerPort: 80
           name: awx-operator
       
         volumeMounts:
