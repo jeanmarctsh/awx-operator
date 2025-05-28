@@ -60,4 +60,4 @@ spec:
     nodePort: 30500
 
 ## awx-operator-postgres
-
+## la partie secret à faire calmement pour bien faire la partie data
